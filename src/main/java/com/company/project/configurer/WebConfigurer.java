@@ -36,6 +36,7 @@ import java.util.List;
 
 /**
  * Spring MVC 配置
+ * @author Gahon
  */
 @Configuration
 public class WebConfigurer implements WebMvcConfigurer {
@@ -50,7 +51,8 @@ public class WebConfigurer implements WebMvcConfigurer {
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
         FastJsonConfig config = new FastJsonConfig();
-        config.setSerializerFeatures(SerializerFeature.WriteMapNullValue);//保留空的字段
+        //保留空的字段
+        config.setSerializerFeatures(SerializerFeature.WriteMapNullValue);
         //SerializerFeature.WriteNullStringAsEmpty,//String null -> ""
         //SerializerFeature.WriteNullNumberAsZero//Number null -> 0
         // 按需配置，更多参考FastJson文档哈
@@ -69,7 +71,8 @@ public class WebConfigurer implements WebMvcConfigurer {
             @Override
             public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception e) {
                 Result result = new Result();
-                if (e instanceof ServiceException) {//业务失败的异常，如“账号或密码错误”
+                //业务失败的异常，如“账号或密码错误”
+                if (e instanceof ServiceException) {
                     result.setCode(ResultCode.FAIL).setMessage(e.getMessage());
                     logger.info(e.getMessage());
                 } else if (e instanceof NoHandlerFoundException) {
@@ -98,17 +101,24 @@ public class WebConfigurer implements WebMvcConfigurer {
         });
     }
 
+    /**
+     * @param registry
+     */
     //解决跨域问题
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         //registry.addMapping("/**");
     }
 
+    /**
+     * @param registry
+     */
     //添加拦截器
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //接口签名认证拦截器，该签名认证比较简单，实际项目中可以使用Json Web Token或其他更好的方式替代。
-        if (!"dev".equals(env)) { //开发环境忽略签名认证
+        if (!"dev".equals(env)) {
+            //开发环境忽略签名认证
             registry.addInterceptor(new HandlerInterceptorAdapter() {
                 @Override
                 public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
