@@ -2,6 +2,7 @@ package com.company.project.configurer;
 
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInterceptor;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -40,8 +41,10 @@ public class MybatisConfigurer {
         properties.setProperty("supportMethodsArguments", "true");
         pageHelper.setProperties(properties);
 
+        PageInterceptor interceptor = new PageInterceptor();
+        interceptor.setProperties(properties);
         //添加插件
-        factory.setPlugins(new Interceptor[]{(Interceptor) pageHelper});
+        factory.setPlugins(new Interceptor[]{interceptor});
 
         //添加XML目录
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
