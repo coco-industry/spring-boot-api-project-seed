@@ -4,7 +4,8 @@ import ${basePackage}.core.Service;
 
 
 /**
- * Created by ${author} on ${date}.
+ * @author ${author}
+ * @data ${date}.
  */
 public interface ${modelNameUpperCamel}Service extends Service<${modelNameUpperCamel}> {
 
