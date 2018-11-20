@@ -22,12 +22,17 @@ USE  TEST_USER;
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `nick_name` varchar(255) DEFAULT NULL,
-  `sex` int(1) DEFAULT NULL,
-  `register_date` datetime NOT NULL,
+  `id`            int(11)      NOT NULL AUTO_INCREMENT,
+  `username`      varchar(255) NOT NULL
+  COMMENT '用户名',
+  `password`      varchar(255) NOT NULL
+  COMMENT '密码',
+  `nick_name`     varchar(255)          DEFAULT NULL
+  COMMENT '昵称',
+  `sex`           int(1)                DEFAULT NULL
+  COMMENT '性别',
+  `register_date` datetime     NOT NULL
+  COMMENT '注册日期',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 

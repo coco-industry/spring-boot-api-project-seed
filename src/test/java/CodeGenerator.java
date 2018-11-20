@@ -84,6 +84,17 @@ public class CodeGenerator {
         pluginConfiguration.addProperty("mappers", MAPPER_INTERFACE_REFERENCE);
         context.addPluginConfiguration(pluginConfiguration);
 
+        /*
+         *  添加swagger的注释接口到model里边，方便查看
+         *  默认添加的内容为sql里COMMENT内容
+         *  该插件位置默认放在test文件夹里边，（因为与项目运行无关）
+         */
+        PluginConfiguration swaggerConfiguration = new PluginConfiguration();
+        swaggerConfiguration.setConfigurationType("com.company.project.GeneratorSwagger2Model");
+        swaggerConfiguration.addProperty("apiModelAnnotationPackage", "io.swagger.annotations.ApiModel");
+        swaggerConfiguration.addProperty("apiModelPropertyAnnotationPackage", "io.swagger.annotations.ApiModelProperty");
+        context.addPluginConfiguration(swaggerConfiguration);
+
         JavaModelGeneratorConfiguration javaModelGeneratorConfiguration = new JavaModelGeneratorConfiguration();
         javaModelGeneratorConfiguration.setTargetProject(PROJECT_PATH + JAVA_PATH);
         javaModelGeneratorConfiguration.setTargetPackage(MODEL_PACKAGE);
